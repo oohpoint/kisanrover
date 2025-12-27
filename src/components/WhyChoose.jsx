@@ -39,7 +39,7 @@ export default function WhyChoose() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, index) => (
                         <div
                             key={index}
@@ -55,10 +55,10 @@ export default function WhyChoose() {
                             </div>
 
                             {/* Content */}
-                            <h3 className="text-sm font-bold text-gray-900 tracking-wide mb-3">
+                            <h3 className="text-xs md:text-sm font-bold text-gray-900 tracking-wide mb-3">
                                 {feature.title}
                             </h3>
-                            <p className="text-sm text-gray-600 leading-relaxed max-w-xs">
+                            <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-xs">
                                 {feature.description}
                             </p>
                         </div>

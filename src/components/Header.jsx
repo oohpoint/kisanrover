@@ -7,7 +7,6 @@ import Image from 'next/image';
 const navigation = [
     { name: 'HOME', href: '/' },
     { name: 'PRODUCTS', href: '/products', hasDropdown: true },
-    { name: 'TECHNOLOGY', href: '/technology' },
     { name: 'ABOUT US', href: '/about' },
 ];
 
@@ -159,6 +158,12 @@ export default function Header() {
                             ENQUIRY
                         </Link>
                     </div>
+                    <Link
+                        href="/enquiry"
+                        className="px-4 py-1 md:hidden text-sm font-medium text-white bg-orange-600 rounded hover:bg-orange-700 transition-colors"
+                    >
+                        ENQUIRY
+                    </Link>
                 </div>
             </nav>
         </header>

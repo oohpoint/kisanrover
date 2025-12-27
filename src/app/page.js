@@ -3,6 +3,7 @@ import Hero from '@/components/Hero'
 import ProductSlider from '@/components/Product'
 import ShowcasingInnovation from '@/components/Showcasing'
 import { Testimonials } from '@/components/Testimonial'
+import WhatsAppButton from '@/components/Whatapp'
 import WhyChoose from '@/components/WhyChoose'
 import React from 'react'
 
@@ -15,6 +16,7 @@ const page = () => {
       <ShowcasingInnovation />
       <Testimonials />
       <Footer />
+      <WhatsAppButton />
     </div>
   )
 }

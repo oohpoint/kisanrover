@@ -1,14 +1,11 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ContactRound, House, ShoppingCart, Tractor } from 'lucide-react';
 
 export default function MobileBottomBar() {
     const pathname = usePathname();
-    const [isProductsOpen, setIsProductsOpen] = useState(false);
-
     const navigation = [
         {
             name: 'Home',
@@ -37,8 +34,8 @@ export default function MobileBottomBar() {
         },
         {
             name: 'Contact',
-            href: '/contact',
-            icon: < ContactRound />
+            href: '/enquiry',
+            icon: <ContactRound />
         },
     ];
 

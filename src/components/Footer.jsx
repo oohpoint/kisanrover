@@ -186,22 +186,6 @@ const Footer = () => {
                                 </li>
                             ))}
                         </ul>
-
-                        {/* Newsletter */}
-                        <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                            <h4 className="text-white font-semibold text-sm mb-2">Newsletter</h4>
-                            <p className="text-xs text-gray-400 mb-3">Get farming tips & updates</p>
-                            <div className="flex gap-2">
-                                <input
-                                    type="email"
-                                    placeholder="Your email"
-                                    className="flex-1 px-3 py-2 bg-gray-900 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition"
-                                />
-                                <button className="px-3 py-2 bg-orange-600 hover:bg-orange-700 rounded-lg transition flex items-center justify-center">
-                                    <Send className="w-4 h-4 text-white" />
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
