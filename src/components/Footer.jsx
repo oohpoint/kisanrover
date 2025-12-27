@@ -48,7 +48,7 @@ const Footer = () => {
     ];
 
     return (
-        <footer className="bg-gray-900 text-gray-300 relative">
+        <footer className="bg-gray-900 hidden md:block text-gray-300 relative">
             {/* Scroll to Top Button */}
             <button
                 onClick={scrollToTop}

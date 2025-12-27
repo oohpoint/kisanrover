@@ -1,4 +1,5 @@
 
+import MobileBottomBar from "@/components/Boutombar";
 import "./globals.css";
 
 
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         {children}
+        <MobileBottomBar />
       </body>
     </html>
   );
