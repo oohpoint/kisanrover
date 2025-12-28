@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
+import AboutPage from '@/components/landingPage/about'
 import ProductSlider from '@/components/Product'
 import ShowcasingInnovation from '@/components/Showcasing'
 import { Testimonials } from '@/components/Testimonial'
@@ -12,6 +13,7 @@ const page = () => {
     <div>
       <Hero />
       <ProductSlider />
+      <AboutPage />
       <WhyChoose />
       <ShowcasingInnovation />
       <Testimonials />

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
+import Link from "next/link";
 
 const images = [
     "/product/P1.jpg",
@@ -53,16 +54,16 @@ const Hero = () => {
                 {/* Content */}
                 <div className="relative z-10 flex flex-col items-center justify-center text-center mt-32 px-4">
                     <h1 className="text-5xl  md:text-6xl font-bold text-white drop-shadow-lg">
-                        Welcome to <span className="text-orange-400">Kisan Rover</span>
+                        Solar-Powered Machines for Small Farmers
                     </h1>
 
                     <p className="text-lg md:text-xl text-white/90 mt-4 max-w-2xl">
-                        Next-gen agricultural technology for modern farmers.
+                        Affordable, Multipurpose, and Easy to Operate.
                     </p>
 
-                    <button className="mt-8 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-lg font-semibold transition">
-                        Explore Products
-                    </button>
+                    <Link href="/products" className="mt-8 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full text-lg font-semibold transition">
+                        Order Now
+                    </Link>
                 </div>
             </div>
         </>

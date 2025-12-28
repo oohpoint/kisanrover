@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const products = [
@@ -10,6 +10,8 @@ const products = [
         title: 'VAMANA',
         subtitle: 'The Ultimate Unmanned Ground Vehicle',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$24,999',
+        badge: 'BESTSELLER'
     },
     {
         id: 2,
@@ -17,6 +19,8 @@ const products = [
         title: 'EBARROW',
         subtitle: 'The Electric Wheel Barrow',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$12,999',
+        badge: 'NEW'
     },
     {
         id: 3,
@@ -24,6 +28,8 @@ const products = [
         title: 'GLX E-LOADER',
         subtitle: 'The Electric Skid-Steer Loader',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$34,999',
+        badge: 'POPULAR'
     },
     {
         id: 4,
@@ -31,6 +37,7 @@ const products = [
         title: 'PRODUCT 4',
         subtitle: 'Advanced Construction Equipment',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$29,999',
     },
     {
         id: 5,
@@ -38,6 +45,7 @@ const products = [
         title: 'PRODUCT 5',
         subtitle: 'Heavy Duty Machinery',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$39,999',
     },
     {
         id: 6,
@@ -45,6 +53,7 @@ const products = [
         title: 'PRODUCT 6',
         subtitle: 'Industrial Equipment',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$27,999',
     },
     {
         id: 7,
@@ -52,6 +61,7 @@ const products = [
         title: 'PRODUCT 7',
         subtitle: 'Construction Solutions',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$31,999',
     },
     {
         id: 8,
@@ -59,6 +69,7 @@ const products = [
         title: 'PRODUCT 8',
         subtitle: 'Advanced Technology',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$36,999',
     },
     {
         id: 9,
@@ -66,11 +77,18 @@ const products = [
         title: 'PRODUCT 9',
         subtitle: 'Smart Equipment',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
+        price: '$33,999',
     },
 ];
 
 export default function ProductSlider() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const [touchStart, setTouchStart] = useState(null);
+    const [touchEnd, setTouchEnd] = useState(null);
+    const autoPlayRef = useRef(null);
+
+    const minSwipeDistance = 50;
 
     const nextSlide = useCallback(() => {
         setCurrentIndex((prev) => (prev + 1) % products.length);
@@ -80,14 +98,21 @@ export default function ProductSlider() {
         setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
     }, []);
 
-    const goToSlide = (index) => {
+    const goToSlide = useCallback((index) => {
         setCurrentIndex(index);
-    };
+    }, []);
 
-    const getPrevIndex = () => (currentIndex - 1 + products.length) % products.length;
-    const getNextIndex = () => (currentIndex + 1) % products.length;
-
+    // Auto-play
     useEffect(() => {
+        if (!isHovered) {
+            autoPlayRef.current = setInterval(nextSlide, 4000);
+        }
+        return () => clearInterval(autoPlayRef.current);
+    }, [isHovered, nextSlide]);
+
+    // Keyboard navigation
+    useEffect(() => {
+
         const handleKeyDown = (e) => {
             if (e.key === 'ArrowLeft') prevSlide();
             if (e.key === 'ArrowRight') nextSlide();
@@ -96,92 +121,120 @@ export default function ProductSlider() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [prevSlide, nextSlide]);
 
+    // Touch handlers
+    const onTouchStart = (e) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        if (distance > minSwipeDistance) nextSlide();
+        if (distance < -minSwipeDistance) prevSlide();
+    };
+
     return (
-        <section className="py-12 md:py-20 px-4 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
+        <section
+            className="py-20 md:py-28 px-4 bg-gradient-to-b from-gray-50 to-white"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <div className="max-w-7xl mx-auto">
-                <div className="relative h-[600px] md:h-[700px] flex items-center justify-center gap-8">
+                {/* Header */}
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 uppercase">
+                        Featured Products
+                    </h2>
+                    <p className="text-orange-600 text-sm md:text-base">
+                        Premium industrial equipment designed for excellence
+                    </p>
+                </div>
 
-                    {/* Left Side Card */}
-                    <div className="hidden lg:block w-1/3 h-[400px]">
-                        <motion.div
-                            key={`prev-${getPrevIndex()}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 0.5 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative h-full cursor-pointer hover:opacity-70 transition-opacity"
-                            onClick={prevSlide}
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg overflow-hidden h-full transform scale-85">
-                                <img
-                                    src={products[getPrevIndex()].image}
-                                    alt={products[getPrevIndex()].title}
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-black/10" />
-                            </div>
-                        </motion.div>
-                    </div>
-
-                    {/* Center Card */}
-                    <div className="w-full lg:w-1/2 h-full flex items-center justify-center">
+                <div
+                    className="relative"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
+                    {/* Main Card */}
+                    <div className="max-w-5xl mx-auto">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={currentIndex}
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.95 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
                                 transition={{ duration: 0.3 }}
-                                className="w-full"
+                                className="bg-white rounded-2xl shadow-xl overflow-hidden"
                             >
-                                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                                    <div className="relative aspect-[12/9] bg-gradient-to-br from-gray-100 to-gray-200">
+                                <div className="grid md:grid-cols-2 gap-0">
+                                    {/* Image Section */}
+                                    <div className="relative aspect-square md:aspect-auto bg-gray-100 group overflow-hidden">
                                         <img
                                             src={products[currentIndex].image}
                                             alt={products[currentIndex].title}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
+
+                                        {/* Badge */}
+                                        {products[currentIndex].badge && (
+                                            <div className="absolute top-6 left-6">
+                                                <span className="bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
+                                                    {products[currentIndex].badge}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <div className="p-4 text-center">
-                                        <h3 className="text-2xl md:text-3xl font-semibold uppercase text-gray-900 mb-1">
-                                            {products[currentIndex].title}
-                                        </h3>
-                                        <p className="text-sm md:text-base text-gray-600 mb-3">
-                                            {products[currentIndex].subtitle}
-                                        </p>
+                                    {/* Content Section */}
+                                    <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-between">
+                                        {/* Product Info */}
+                                        <div>
+                                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">
+                                                {products[currentIndex].title}
+                                            </h3>
+                                            <p className="text-base md:text-lg text-gray-600 mb-8">
+                                                {products[currentIndex].subtitle}
+                                            </p>
 
-                                        <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-4 md:p-5 shadow-xl">
-                                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                                                <div className="flex flex-1 items-center justify-around w-full sm:w-auto gap-4">
-                                                    <div className="text-center flex-1">
-                                                        <div className="text-xs text-gray-400 mb-1">Load Carrier</div>
-                                                        <div className="text-yellow-400 font-bold text-sm md:text-base">
-                                                            {products[currentIndex].specs.load}
-                                                        </div>
-                                                    </div>
-                                                    <div className="h-8 w-px bg-gray-700 hidden sm:block" />
-                                                    <div className="text-center flex-1">
-                                                        <div className="text-xs text-gray-400 mb-1">Battery Life</div>
-                                                        <div className="text-white font-bold text-sm md:text-base">
-                                                            {products[currentIndex].specs.battery}
-                                                        </div>
-                                                    </div>
-                                                    <div className="h-8 w-px bg-gray-700 hidden sm:block" />
-                                                    <div className="text-center flex-1">
-                                                        <div className="text-xs text-gray-400 mb-1">Runtime</div>
-                                                        <div className="text-white font-bold text-sm md:text-base">
-                                                            {products[currentIndex].specs.runtime}
-                                                        </div>
-                                                    </div>
+                                            {/* Specifications */}
+                                            <div className="space-y-4 mb-8">
+                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Load Capacity</span>
+                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.load}</span>
                                                 </div>
-                                                <motion.button
-                                                    whileHover={{ scale: 1.05 }}
-                                                    whileTap={{ scale: 0.95 }}
-                                                    className="w-full sm:w-auto px-6 md:px-8 py-2.5 md:py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black text-sm md:text-base font-bold rounded-xl hover:from-yellow-500 hover:to-yellow-600 transition-all shadow-lg"
-                                                >
-                                                    ORDER NOW
-                                                </motion.button>
+                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Battery Life</span>
+                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.battery}</span>
+                                                </div>
+                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Runtime</span>
+                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.runtime}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Price and CTA */}
+                                        <div>
+                                            <div className="mb-6">
+                                                <p className="text-sm text-gray-500 mb-1">Starting from</p>
+                                                <p className="text-4xl md:text-5xl font-bold text-gray-900">
+                                                    {products[currentIndex].price}
+                                                </p>
+                                            </div>
+
+                                            <div className="flex flex-col sm:flex-row gap-3">
+                                                <button className="flex-1 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl">
+                                                    Order Now
+                                                </button>
+                                                <button className="flex-1 px-8 py-4 bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-600 font-semibold rounded-xl transition-colors duration-200">
+                                                    Learn More
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -190,77 +243,39 @@ export default function ProductSlider() {
                         </AnimatePresence>
                     </div>
 
-                    {/* Right Side Card */}
-                    <div className="hidden lg:block w-1/3 h-[400px]">
-                        <motion.div
-                            key={`next-${getNextIndex()}`}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 0.5 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="relative h-full cursor-pointer hover:opacity-70 transition-opacity"
-                            onClick={nextSlide}
-                        >
-                            <div className="bg-white rounded-2xl shadow-lg overflow-hidden h-full transform scale-85">
-                                <img
-                                    src={products[getNextIndex()].image}
-                                    alt={products[getNextIndex()].title}
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-black/20" />
-                            </div>
-                        </motion.div>
-                    </div>
-
                     {/* Navigation Buttons */}
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                    <button
                         onClick={prevSlide}
-                        className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full shadow-xl flex items-center justify-center hover:bg-gray-50 transition-colors z-30 group"
-                        aria-label="Previous slide"
+                        className="absolute left-0 md:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white hover:bg-gray-50 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 group"
+                        aria-label="Previous product"
                     >
-                        <svg
-                            className="w-6 h-6 md:w-7 md:h-7 text-gray-700 group-hover:text-orange-600 transition-colors"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                        <svg className="w-6 h-6 text-gray-600 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
-                    </motion.button>
+                    </button>
 
-                    <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                    <button
                         onClick={nextSlide}
-                        className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white rounded-full shadow-xl flex items-center justify-center hover:bg-gray-50 transition-colors z-30 group"
-                        aria-label="Next slide"
+                        className="absolute right-0 md:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white hover:bg-gray-50 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 group"
+                        aria-label="Next product"
                     >
-                        <svg
-                            className="w-6 h-6 md:w-7 md:h-7 text-gray-700 group-hover:text-orange-600 transition-colors"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                        <svg className="w-6 h-6 text-gray-600 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
-                    </motion.button>
+                    </button>
                 </div>
 
                 {/* Dots Indicator */}
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-2 mt-12">
                     {products.map((_, idx) => (
-                        <motion.button
+                        <button
                             key={idx}
                             onClick={() => goToSlide(idx)}
-                            whileHover={{ scale: 1.2 }}
-                            whileTap={{ scale: 0.9 }}
-                            className={`transition-all rounded-full ${idx === currentIndex
-                                ? 'w-10 h-2.5 bg-gradient-to-r from-orange-600 to-orange-700'
+                            className={`transition-all duration-300 rounded-full ${idx === currentIndex
+                                ? 'w-10 h-2.5 bg-orange-500'
                                 : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'
                                 }`}
-                            aria-label={`Go to slide ${idx + 1}`}
+                            aria-label={`Go to product ${idx + 1}`}
                         />
                     ))}
                 </div>

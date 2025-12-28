@@ -1,26 +1,21 @@
 import React from 'react';
-import { DollarSign, Settings, Zap, Globe } from 'lucide-react';
+import { DollarSign, Settings, Zap, Globe, SolarPanel, FileSliders, RefreshCcw } from 'lucide-react';
 
 const features = [
     {
-        icon: DollarSign,
-        title: 'LOWEST OPERATIONAL COST',
-        description: 'Electric Tractors save up to 80% on diesel expenses',
-    },
-    {
-        icon: Settings,
-        title: 'NEXT-GEN TECHNOLOGY',
-        description: 'Autonomous and drive-by-wire system smart, data driven and connected',
+        icon: SolarPanel,
+        title: 'SOLAR + BATTERY BACKUP POWERED',
+        description: 'Solar + Battery backup powered, zero fuel costs, minimal maintenance',
     },
     {
         icon: Zap,
-        title: 'AUTOMATION',
-        description: 'Automating repetitive skilled tasks to enhance productivity',
+        title: 'MULTIPURPOSE USE',
+        description: 'Multipurpose use (weed/seed/spray) with advanced tech for small farmers',
     },
     {
-        icon: Globe,
-        title: 'SAVE ENVIRONMENT',
-        description: 'Reduces upto 10 tons of CO2 annually per machine',
+        icon: RefreshCcw,
+        title: 'AFFORDABLE & EASY TO USE',
+        description: 'Affordable for small farms, easy to operate, reduces labor costs',
     },
 ];
 
@@ -39,7 +34,7 @@ export default function WhyChoose() {
                 </div>
 
                 {/* Features Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
                         <div
                             key={index}

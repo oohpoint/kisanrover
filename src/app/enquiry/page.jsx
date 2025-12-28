@@ -246,15 +246,15 @@ const ContactPage = () => {
             )}
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
-                <Link
-                    href="/"
-                    className="inline-flex items-center space-x-2 mb-6 md:mb-8 text-gray-600 hover:text-gray-900 transition-all duration-300 group"
+                <button
+                    onClick={() => window.history.back()}
+                    className="fixed top-4 left-4 z-50 flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-800 px-4 py-2 rounded-lg shadow-md transition-all hover:shadow-lg"
                 >
-                    <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
-                    <span className="font-medium">Back to Home</span>
-                </Link>
+                    <ArrowLeft size={20} />
+                    <span className="hidden sm:inline">Back</span>
+                </button>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-3 mt-8 gap-6 md:gap-8 lg:gap-12">
                     <div className="lg:col-span-1 space-y-6">
                         <div>
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
