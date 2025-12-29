@@ -24,11 +24,13 @@ export default function WhyChoose() {
         <section className="py-16 px-4 bg-gradient-to-b from-white to-gray-50">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="text-center mb-9">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                        WHY CHOOSE KISAN ROVER
-                    </h2>
-                    <p className="text-orange-600 text-sm md:text-base">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl md:text-5xl font-semibold mb-3">
+                        <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                            Why Choose Kisan Rover
+                        </span>
+                    </h1>
+                    <p className="text-gray-800 text-md md:text-lg max-w-2xl mx-auto leading-tight">
                         Designed in Bharath, Made for the World
                     </p>
                 </div>

@@ -120,11 +120,13 @@ export const Testimonials = () => {
         <section className="bg-white py-12 sm:py-16 md:py-20 lg:py-24">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                 {/* Section Heading */}
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                        TESTIMONIALS
-                    </h2>
-                    <p className="text-orange-600 text-sm md:text-base">
+                <div className="text-center mb-12">
+                    <h1 className="text-4xl md:text-5xl font-semibold mb-3">
+                        <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                            Testimonials
+                        </span>
+                    </h1>
+                    <p className="text-gray-800 text-md md:text-lg max-w-2xl mx-auto leading-tight">
                         What Our Clients Say About Us
                     </p>
                 </div>

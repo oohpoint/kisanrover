@@ -1,285 +1,235 @@
-'use client';
-
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ShoppingCart, Battery, Clock, Weight, Zap, Award } from 'lucide-react';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const products = [
     {
         id: 1,
         image: '/product/P1.jpg',
-        title: 'VAMANA',
-        subtitle: 'The Ultimate Unmanned Ground Vehicle',
+        title: 'Agricultural Robotic Bull',
+        subtitle: '6-in-1 multifunctional electric robot',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$24,999',
+        price: '₹80,000',
         badge: 'BESTSELLER'
     },
     {
         id: 2,
         image: '/product/P2.jpg',
-        title: 'EBARROW',
-        subtitle: 'The Electric Wheel Barrow',
+        title: 'Multifunctional Rover',
+        subtitle: 'Affordable compact farm machine',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$12,999',
+        price: '₹50,000',
         badge: 'NEW'
     },
     {
         id: 3,
         image: '/product/P3.jpg',
-        title: 'GLX E-LOADER',
-        subtitle: 'The Electric Skid-Steer Loader',
+        title: 'Agriculture Tiller',
+        subtitle: 'Soil preparation & weeding',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$34,999',
+        price: '₹40,000',
         badge: 'POPULAR'
     },
     {
         id: 4,
         image: '/product/P4.jpg',
-        title: 'PRODUCT 4',
-        subtitle: 'Advanced Construction Equipment',
+        title: 'Agriculture Sprayer',
+        subtitle: 'Low-cost effective crop sprayer',
         specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$29,999',
-    },
-    {
-        id: 5,
-        image: '/product/P5.jpg',
-        title: 'PRODUCT 5',
-        subtitle: 'Heavy Duty Machinery',
-        specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$39,999',
-    },
-    {
-        id: 6,
-        image: '/product/P6.jpg',
-        title: 'PRODUCT 6',
-        subtitle: 'Industrial Equipment',
-        specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$27,999',
-    },
-    {
-        id: 7,
-        image: '/product/P7.jpg',
-        title: 'PRODUCT 7',
-        subtitle: 'Construction Solutions',
-        specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$31,999',
-    },
-    {
-        id: 8,
-        image: '/product/P8.jpg',
-        title: 'PRODUCT 8',
-        subtitle: 'Advanced Technology',
-        specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$36,999',
-    },
-    {
-        id: 9,
-        image: '/product/P9.jpg',
-        title: 'PRODUCT 9',
-        subtitle: 'Smart Equipment',
-        specs: { load: '500 Kg', battery: '7 Years', runtime: '8-10 Hrs' },
-        price: '$33,999',
+        price: '₹10,000',
     },
 ];
 
-export default function ProductSlider() {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
-    const [touchStart, setTouchStart] = useState(null);
-    const [touchEnd, setTouchEnd] = useState(null);
-    const autoPlayRef = useRef(null);
+const getBadgeConfig = (badge) => {
+    switch (badge) {
+        case 'BESTSELLER':
+            return {
+                gradient: 'bg-gradient-to-r from-amber-500 to-orange-600',
+                icon: Award,
+                glow: 'shadow-amber-500/40'
+            };
+        case 'NEW':
+            return {
+                gradient: 'bg-gradient-to-r from-emerald-500 to-teal-600',
+                icon: Zap,
+                glow: 'shadow-emerald-500/50'
+            };
+        case 'POPULAR':
+            return {
+                gradient: 'bg-gradient-to-r from-blue-500 to-indigo-600',
+                icon: Award,
+                glow: 'shadow-blue-500/50'
+            };
+        default:
+            return {
+                gradient: 'bg-gray-600',
+                icon: Award,
+                glow: 'shadow-gray-500/50'
+            };
+    }
+};
 
-    const minSwipeDistance = 50;
-
-    const nextSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev + 1) % products.length);
-    }, []);
-
-    const prevSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev - 1 + products.length) % products.length);
-    }, []);
-
-    const goToSlide = useCallback((index) => {
-        setCurrentIndex(index);
-    }, []);
-
-    // Auto-play
-    useEffect(() => {
-        if (!isHovered) {
-            autoPlayRef.current = setInterval(nextSlide, 4000);
-        }
-        return () => clearInterval(autoPlayRef.current);
-    }, [isHovered, nextSlide]);
-
-    // Keyboard navigation
-    useEffect(() => {
-
-        const handleKeyDown = (e) => {
-            if (e.key === 'ArrowLeft') prevSlide();
-            if (e.key === 'ArrowRight') nextSlide();
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [prevSlide, nextSlide]);
-
-    // Touch handlers
-    const onTouchStart = (e) => {
-        setTouchEnd(null);
-        setTouchStart(e.targetTouches[0].clientX);
-    };
-
-    const onTouchMove = (e) => {
-        setTouchEnd(e.targetTouches[0].clientX);
-    };
-
-    const onTouchEnd = () => {
-        if (!touchStart || !touchEnd) return;
-        const distance = touchStart - touchEnd;
-        if (distance > minSwipeDistance) nextSlide();
-        if (distance < -minSwipeDistance) prevSlide();
-    };
-
+function ProductSlider() {
     return (
-        <section
-            className="py-20 md:py-28 px-4 bg-gradient-to-b from-gray-50 to-white"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-        >
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 uppercase">
-                        Featured Products
-                    </h2>
-                    <p className="text-orange-600 text-sm md:text-base">
-                        Premium industrial equipment designed for excellence
-                    </p>
-                </div>
+        <div className="min-h-screen bg-white py-16 px-4">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-center mb-16"
+            >
+                <h1 className="text-4xl md:text-5xl font-semibold mb-3">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Our Products
+                    </span>
+                </h1>
+                <p className="text-gray-800 text-md md:text-lg max-w-2xl mx-auto leading-tight">
+                    Discover innovative agricultural solutions designed for modern farming excellence
+                </p>
+            </motion.div>
 
-                <div
-                    className="relative"
-                    onTouchStart={onTouchStart}
-                    onTouchMove={onTouchMove}
-                    onTouchEnd={onTouchEnd}
+            <div className="max-w-7xl mx-auto px-3 md:px-12">
+                <Carousel
+                    opts={{
+                        align: "start",
+                        loop: false,
+                    }}
+                    className="w-full"
                 >
-                    {/* Main Card */}
-                    <div className="max-w-5xl mx-auto">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentIndex}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.3 }}
-                                className="bg-white rounded-2xl shadow-xl overflow-hidden"
-                            >
-                                <div className="grid md:grid-cols-2 gap-0">
-                                    {/* Image Section */}
-                                    <div className="relative aspect-square md:aspect-auto bg-gray-100 group overflow-hidden">
-                                        <img
-                                            src={products[currentIndex].image}
-                                            alt={products[currentIndex].title}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
+                    <CarouselContent className="-ml-2 md:-ml-4">
+                        {products.map((product, index) => {
+                            const badgeConfig = product.badge ? getBadgeConfig(product.badge) : null;
+                            const BadgeIcon = badgeConfig?.icon;
 
-                                        {/* Badge */}
-                                        {products[currentIndex].badge && (
-                                            <div className="absolute top-6 left-6">
-                                                <span className="bg-orange-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg">
-                                                    {products[currentIndex].badge}
-                                                </span>
+                            return (
+                                <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-full md:basis-1/2 lg:basis-1/3 mb-10">
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 50 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.1, type: "spring" }}
+                                        whileHover={{ y: -12 }}
+                                        className="h-full"
+                                    >
+                                        <div className="bg-white rounded-md shadow-xl overflow-hidden group relative border border-gray-100 h-full transition-all duration-500 hover:shadow-orange-200/50 hover:border-orange-200">
+                                            {product.badge && (
+                                                <motion.div
+                                                    initial={{ x: -100, opacity: 0 }}
+                                                    animate={{ x: 0, opacity: 1 }}
+                                                    transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 100 }}
+                                                    className={`absolute top-5 left-0 ${badgeConfig.gradient} ${badgeConfig.glow} text-white text-xs font-bold px-5 py-2 rounded-r-full z-10 shadow-xl flex items-center gap-1.5`}
+                                                >
+                                                    {BadgeIcon && <BadgeIcon className="w-3.5 h-3.5" />}
+                                                    {product.badge}
+                                                </motion.div>
+                                            )}
+
+                                            <div className="relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 h-72">
+                                                <motion.div
+                                                    className="absolute inset-0"
+                                                    whileHover={{ scale: 1.1 }}
+                                                    transition={{ duration: 0.6, ease: "easeOut" }}
+                                                >
+                                                    <img
+                                                        src={product.image}
+                                                        alt={product.title}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </motion.div>
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                                                {/* Floating Action Button on Hover */}
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 20 }}
+                                                    whileHover={{ opacity: 1, y: 0 }}
+                                                    className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                                >
+                                                    <button className="bg-white text-gray-900 px-6 py-3 rounded-full font-semibold shadow-2xl transform hover:scale-105 transition-transform flex items-center gap-2">
+                                                        <span>Quick View</span>
+                                                        <motion.span
+                                                            animate={{ x: [0, 4, 0] }}
+                                                            transition={{ repeat: Infinity, duration: 1.5 }}
+                                                        >
+                                                            →
+                                                        </motion.span>
+                                                    </button>
+                                                </motion.div>
                                             </div>
-                                        )}
-                                    </div>
 
-                                    {/* Content Section */}
-                                    <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-between">
-                                        {/* Product Info */}
-                                        <div>
-                                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">
-                                                {products[currentIndex].title}
-                                            </h3>
-                                            <p className="text-base md:text-lg text-gray-600 mb-8">
-                                                {products[currentIndex].subtitle}
-                                            </p>
+                                            <div className="p-7">
+                                                <div className="mb-4">
+                                                    <h3 className="text-2xl font-semibold text-gray-900 mb-1 group-hover:text-orange-600 transition-colors leading-tight">
+                                                        {product.title}
+                                                    </h3>
+                                                    <p className="text-gray-600 text-sm leading-snug">{product.subtitle}</p>
+                                                </div>
 
-                                            {/* Specifications */}
-                                            <div className="space-y-4 mb-8">
-                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Load Capacity</span>
-                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.load}</span>
+                                                <div className="grid grid-cols-3 gap-3 mb-6">
+                                                    <motion.div
+                                                        whileHover={{ scale: 1.05, y: -2 }}
+                                                        className="bg-gradient-to-br from-orange-50 to-red-50 rounded-md p-3 text-center border border-orange-100 hover:border-orange-300 transition-all cursor-pointer"
+                                                    >
+                                                        <Weight className="w-5 h-5 text-orange-600 mx-auto mb-1.5" />
+                                                        <p className="text-xs text-gray-600 font-medium mb-0.5">Load</p>
+                                                        <p className="text-sm font-bold text-gray-900">{product.specs.load}</p>
+                                                    </motion.div>
+                                                    <motion.div
+                                                        whileHover={{ scale: 1.05, y: -2 }}
+                                                        className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-md p-3 text-center border border-blue-100 hover:border-blue-300 transition-all cursor-pointer"
+                                                    >
+                                                        <Battery className="w-5 h-5 text-blue-600 mx-auto mb-1.5" />
+                                                        <p className="text-xs text-gray-600 font-medium mb-0.5">Battery</p>
+                                                        <p className="text-sm font-bold text-gray-900">{product.specs.battery}</p>
+                                                    </motion.div>
+                                                    <motion.div
+                                                        whileHover={{ scale: 1.05, y: -2 }}
+                                                        className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-md p-3 text-center border border-amber-100 hover:border-amber-300 transition-all cursor-pointer"
+                                                    >
+                                                        <Clock className="w-5 h-5 text-amber-600 mx-auto mb-1.5" />
+                                                        <p className="text-xs text-gray-600 font-medium mb-0.5">Runtime</p>
+                                                        <p className="text-sm font-bold text-gray-900">{product.specs.runtime}</p>
+                                                    </motion.div>
                                                 </div>
-                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Battery Life</span>
-                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.battery}</span>
-                                                </div>
-                                                <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                                                    <span className="text-sm font-medium text-gray-600 uppercase tracking-wide">Runtime</span>
-                                                    <span className="text-lg font-bold text-gray-900">{products[currentIndex].specs.runtime}</span>
+
+                                                <div className="flex items-center justify-between pt-5 border-t-2 border-gray-100">
+                                                    <div>
+                                                        <p className="text-xs text-gray-500 font-medium mb-1">Starting from</p>
+                                                        <p className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                                                            {product.price}
+                                                        </p>
+                                                    </div>
+                                                    <motion.button
+                                                        whileHover={{ scale: 1.08 }}
+                                                        whileTap={{ scale: 0.92 }}
+                                                        className="relative bg-gradient-to-r from-orange-600 to-red-600 text-white px-4 py-3 rounded-md shadow-lg hover:shadow-2xl hover:shadow-orange-500/50 transition-all group/btn overflow-hidden"
+                                                    >
+                                                        <span className="absolute inset-0 bg-gradient-to-r from-red-600 to-orange-600 opacity-0 group-hover/btn:opacity-100 transition-opacity" />
+                                                        <span className="relative flex items-center gap-2 font-semibold">
+                                                            <ShoppingCart className="w-6 h-6" />
+                                                            <span className="hidden sm:inline">Add</span>
+                                                        </span>
+                                                    </motion.button>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {/* Price and CTA */}
-                                        <div>
-                                            <div className="mb-6">
-                                                <p className="text-sm text-gray-500 mb-1">Starting from</p>
-                                                <p className="text-4xl md:text-5xl font-bold text-gray-900">
-                                                    {products[currentIndex].price}
-                                                </p>
-                                            </div>
-
-                                            <div className="flex flex-col sm:flex-row gap-3">
-                                                <button className="flex-1 px-8 py-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl">
-                                                    Order Now
-                                                </button>
-                                                <button className="flex-1 px-8 py-4 bg-white border-2 border-gray-300 hover:border-orange-500 text-gray-700 hover:text-orange-600 font-semibold rounded-xl transition-colors duration-200">
-                                                    Learn More
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-
-                    {/* Navigation Buttons */}
-                    <button
-                        onClick={prevSlide}
-                        className="absolute left-0 md:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white hover:bg-gray-50 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 group"
-                        aria-label="Previous product"
-                    >
-                        <svg className="w-6 h-6 text-gray-600 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-
-                    <button
-                        onClick={nextSlide}
-                        className="absolute right-0 md:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white hover:bg-gray-50 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 z-10 group"
-                        aria-label="Next product"
-                    >
-                        <svg className="w-6 h-6 text-gray-600 group-hover:text-orange-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-                </div>
-
-                {/* Dots Indicator */}
-                <div className="flex items-center justify-center gap-2 mt-12">
-                    {products.map((_, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => goToSlide(idx)}
-                            className={`transition-all duration-300 rounded-full ${idx === currentIndex
-                                ? 'w-10 h-2.5 bg-orange-500'
-                                : 'w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400'
-                                }`}
-                            aria-label={`Go to product ${idx + 1}`}
-                        />
-                    ))}
-                </div>
+                                    </motion.div>
+                                </CarouselItem>
+                            );
+                        })}
+                    </CarouselContent>
+                    <CarouselPrevious className="hidden md:flex -left-14 w-12 h-12 bg-white border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white shadow-xl transition-all hover:scale-110" />
+                    <CarouselNext className="hidden md:flex -right-14 w-12 h-12 bg-white border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white shadow-xl transition-all hover:scale-110" />
+                </Carousel>
             </div>
-        </section>
+        </div>
     );
 }
+
+export default ProductSlider;

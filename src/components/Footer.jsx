@@ -17,10 +17,10 @@ const Footer = () => {
     ];
 
     const products = [
-        { label: 'Weeding Machines', href: '/products/weeding' },
-        { label: 'Seeding Machines', href: '/products/seeding' },
-        { label: 'Spraying Machines', href: '/products/spraying' },
-        { label: 'Multipurpose Machines', href: '/products/multipurpose' },
+        { label: 'Agricultural Robotic Bull', href: '/products' },
+        { label: 'Multifunctional Rover', href: '/products' },
+        { label: 'Agriculture Tiller', href: '/products' },
+        { label: 'Agriculture Sprayer', href: '/products' },
         { label: 'Product Categories', href: '/products' }
     ];
 
