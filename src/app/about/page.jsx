@@ -22,11 +22,9 @@ export default function AboutPage() {
             <MissionVisionSection />
             <TeamSection />
             <FounderStorySection />
-            <TimelineSection />
             <ImpactMetricsSection />
             <AwardsSection />
             <PartnersSection />
-            <CTASection />
         </div>
     );
 }
@@ -35,9 +33,11 @@ function MissionVisionSection() {
     return (
         <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-yellow-50 to-white">
             <div className="max-w-5xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Our Purpose
-                </h2>
+                <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-center">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Our Purpose
+                    </span>
+                </h1>
 
                 <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
                     {/* Mission */}
@@ -47,7 +47,7 @@ function MissionVisionSection() {
                             <h3 className="text-2xl font-bold text-orange-600">Mission</h3>
                         </div>
                         <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-                            To empower small farmers with affordable, solar-powered agricultural solutions that reduce labor costs, increase productivity, and promote sustainable farming practices across India.
+                            To make farming easier, less expensive, and more rewarding for small-scale farmers using affordable robotic solutions.
                         </p>
                     </div>
 
@@ -58,7 +58,7 @@ function MissionVisionSection() {
                             <h3 className="text-2xl font-bold text-blue-600">Vision</h3>
                         </div>
                         <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-                            A future where every small farmer has access to sustainable, cost-effective farming technology that improves livelihoods and preserves the environment for generations to come.
+                            Empowering 500 million small farmers globally with sustainable farm automation solutions by 2040.
                         </p>
                     </div>
                 </div>
@@ -70,27 +70,27 @@ function MissionVisionSection() {
 function TeamSection() {
     const team = [
         {
-            name: 'Rajesh Kumar',
-            role: 'Founder & Chief Engineer',
-            bio: 'Mechanical engineer with 10+ years of experience in agricultural equipment design.',
+            name: 'Ramdhan Lodha',
+            role: 'Founder & CEO',
+            bio: 'PENDING.',
             linkedin: 'https://linkedin.com/in/rajeshkumar'
         },
         {
-            name: 'Priya Sharma',
-            role: 'Head of Operations',
-            bio: 'MBA graduate with expertise in supply chain management and rural market expansion.',
+            name: 'Ratan Kumar',
+            role: 'Co-Founder & CTO',
+            bio: 'Agricultural Engineer with 7+ years of experience.',
             linkedin: 'https://linkedin.com/in/priyasharma'
         },
         {
-            name: 'Amit Patel',
+            name: 'Lalit Kumar',
             role: 'Lead Designer & Product Manager',
-            bio: 'Industrial designer with 8+ years in agricultural machinery and 2 patents.',
+            bio: 'Mechanical Engineer',
             linkedin: 'https://linkedin.com/in/amitpatel'
         },
         {
-            name: 'Sunita Reddy',
-            role: 'Marketing & Farmer Engagement Director',
-            bio: 'Digital marketing expert focused on rural markets and farmer communities.',
+            name: 'Jigesh Patel',
+            role: 'R & D Head(Design Engineer)',
+            bio: 'PENDING.',
             linkedin: 'https://linkedin.com/in/sunitareddy'
         },
     ];
@@ -99,10 +99,14 @@ function TeamSection() {
         <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12 sm:mb-16">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                        Meet Our Team
-                    </h2>
-                    <p className="text-gray-600 text-lg">Dedicated experts driving agricultural innovation</p>
+                    <h1 className="text-4xl md:text-5xl font-semibold mb-3">
+                        <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                            Meet Our Team
+                        </span>
+                    </h1>
+                    <p className="text-gray-800 text-md md:text-lg max-w-2xl mx-auto leading-tight">
+                        Dedicated experts driving agricultural innovation
+                    </p>
                 </div>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -162,9 +166,11 @@ function FounderStorySection() {
     return (
         <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gray-50 to-white">
             <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Founder's Journey
-                </h2>
+                <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-center">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Founder's Journey
+                    </span>
+                </h1>
 
                 <div className="space-y-4">
                     {stories.map((story, index) => (
@@ -196,50 +202,6 @@ function FounderStorySection() {
     );
 }
 
-function TimelineSection() {
-    const milestones = [
-        { year: '2019', title: 'The Vision Sparked', desc: 'Witnessed farmer struggles; conceived the idea for solar-powered agricultural solutions.' },
-        { year: '2020', title: 'First Prototype Built', desc: 'Developed and tested the first solar weeding machine in a garage setup.' },
-        { year: '2021', title: 'First Major Demo', desc: 'Conducted field demonstration to 20 farmers; received first 5 customer orders.' },
-        { year: '2022', title: 'National Award Won', desc: 'Recognized with the National Innovation Award for Agricultural Technology.' },
-        { year: '2023', title: 'Media Recognition', desc: 'Featured in The Hindu, Economic Times, and leading regional publications.' },
-        { year: '2024', title: 'Major Expansion', desc: 'Reached 500+ farmers across 25 villages in 3+ states.' },
-    ];
-
-    return (
-        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
-            <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Timeline & Milestones
-                </h2>
-
-                <div className="relative">
-                    {/* Vertical line for desktop */}
-                    <div className="hidden sm:block absolute left-12 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-400 to-orange-200"></div>
-
-                    <div className="space-y-8 sm:space-y-12">
-                        {milestones.map((item, index) => (
-                            <div key={index} className="relative flex gap-4 sm:gap-8">
-                                <div className="flex-shrink-0">
-                                    <div className="flex items-center justify-center h-10 w-10 rounded-full bg-orange-600 text-white font-bold shadow-lg">
-                                        {index + 1}
-                                    </div>
-                                </div>
-                                <div className="flex-1 pt-2 bg-gray-50 p-4 sm:p-6 rounded-lg border border-gray-200 hover:border-orange-300 transition-colors">
-                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
-                                        <h4 className="text-lg sm:text-xl font-bold text-gray-900">{item.title}</h4>
-                                        <span className="text-orange-600 font-bold text-sm">{item.year}</span>
-                                    </div>
-                                    <p className="text-gray-600 text-sm sm:text-base">{item.desc}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-}
 
 function ImpactMetricsSection() {
     const metrics = [
@@ -254,9 +216,11 @@ function ImpactMetricsSection() {
     return (
         <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-yellow-50 to-white">
             <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Our Impact
-                </h2>
+                <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-center">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Our Impact
+                    </span>
+                </h1>
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {metrics.map((metric, index) => {
@@ -312,9 +276,11 @@ function AwardsSection() {
     return (
         <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white">
             <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Awards & Recognition
-                </h2>
+                <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-center">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Awards & Recognition
+                    </span>
+                </h1>
 
                 <div className="grid sm:grid-cols-2 gap-6">
                     {awards.map((award, index) => (
@@ -351,10 +317,11 @@ function PartnersSection() {
     return (
         <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
             <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-12 text-center">
-                    Our Partners
-                </h2>
-
+                <h1 className="text-4xl md:text-5xl font-semibold mb-6 text-center">
+                    <span className="bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                        Our Partners
+                    </span>
+                </h1>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {partners.map((partner, index) => (
                         <div
@@ -367,46 +334,6 @@ function PartnersSection() {
                         </div>
                     ))}
                 </div>
-            </div>
-        </section>
-    );
-}
-
-function CTASection() {
-    return (
-        <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-orange-500 to-orange-600">
-            <div className="max-w-5xl mx-auto text-center">
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 sm:mb-6">
-                    Ready to Transform Your Farming?
-                </h2>
-                <p className="text-base sm:text-lg text-white/90 mb-10">
-                    Join hundreds of farmers already saving time, reducing costs, and farming sustainably.
-                </p>
-
-                <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
-                    <a
-                        href="tel:+919999999999"
-                        className="bg-white text-orange-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl text-sm sm:text-base"
-                    >
-                        📞 Book a Demo
-                    </a>
-                    <a
-                        href="mailto:contact@agritech.com"
-                        className="bg-transparent border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold hover:bg-white/10 transition-all text-sm sm:text-base"
-                    >
-                        ✉️ Dealership
-                    </a>
-                    <a
-                        href="mailto:contact@agritech.com"
-                        className="bg-transparent border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold hover:bg-white/10 transition-all text-sm sm:text-base"
-                    >
-                        💬 Contact
-                    </a>
-                </div>
-
-                <p className="text-white/80 text-xs sm:text-sm mt-8">
-                    Have questions? Reach out anytime. We're here to help.
-                </p>
             </div>
         </section>
     );

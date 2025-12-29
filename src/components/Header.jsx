@@ -13,32 +13,26 @@ const navigation = [
 const products = [
     {
         id: 1,
-        name: 'Steel Pipes',
+        name: 'Agricultural Robotic Bull',
         image: '/product/P1.jpg',
         href: '/products/steel-pipes',
     },
     {
         id: 2,
-        name: 'Metal Sheets',
+        name: 'Multifunctional Rover',
         image: '/product/P2.jpg',
         href: '/products/metal-sheets',
     },
     {
         id: 3,
-        name: 'Construction Tools',
+        name: 'Agriculture Tiller',
         image: '/product/P3.jpg',
         href: '/products/tools',
     },
     {
         id: 4,
-        name: 'Safety Equipment',
+        name: 'Agriculture Sprayer',
         image: '/product/P4.jpg',
-        href: '/products/safety',
-    },
-    {
-        id: 5,
-        name: 'Safety Equipment',
-        image: '/product/P6.jpg',
         href: '/products/safety',
     },
 ];
@@ -87,7 +81,7 @@ export default function Header() {
                                         {isProductsOpen && (
                                             <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-screen max-w-5xl z-50">
                                                 <div className="bg-white rounded-lg shadow-2xl ring-1 ring-black ring-opacity-5 p-6">
-                                                    <div className="grid grid-cols-5 gap-6">
+                                                    <div className="grid grid-cols-4 gap-6">
                                                         {products.map((product) => (
                                                             <Link
                                                                 key={product.id}
