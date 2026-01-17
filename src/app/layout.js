@@ -1,8 +1,6 @@
-
 import MobileBottomBar from "@/components/Boutombar";
 import "./globals.css";
-
-
+import Script from "next/script";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,6 +13,13 @@ export default function RootLayout({ children }) {
       <body>
         {children}
         <MobileBottomBar />
+
+        {/* OooohPoint Attribution Tracker */}
+        <Script
+          src="https://ooohpoint-attributio-6kn3.onrender.com/sdk.js"
+          data-api-key="oap_test_2313830b9cd2fcda8f57490e836aaaea088a42432defa820"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
